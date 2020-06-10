@@ -1,0 +1,358 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4161386A2490FE6E00015663 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 416138692490FE6E00015663 /* AppDelegate.m */; };
+		416138702490FE6E00015663 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4161386F2490FE6E00015663 /* ViewController.m */; };
+		416138732490FE6E00015663 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 416138712490FE6E00015663 /* Main.storyboard */; };
+		416138752490FE6F00015663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 416138742490FE6F00015663 /* Assets.xcassets */; };
+		416138782490FE6F00015663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 416138762490FE6F00015663 /* LaunchScreen.storyboard */; };
+		4161387B2490FE6F00015663 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4161387A2490FE6F00015663 /* main.m */; };
+		416138F62491025900015663 /* Peertalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416138F52491025900015663 /* Peertalk.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		416138652490FE6E00015663 /* Peertalk-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Peertalk-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		416138682490FE6E00015663 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		416138692490FE6E00015663 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4161386E2490FE6E00015663 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		4161386F2490FE6E00015663 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		416138722490FE6E00015663 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		416138742490FE6F00015663 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		416138772490FE6F00015663 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		416138792490FE6F00015663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4161387A2490FE6F00015663 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		416138CD2490FFB200015663 /* PeertalkShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PeertalkShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		416138F52491025900015663 /* Peertalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Peertalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		416138622490FE6E00015663 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416138F62491025900015663 /* Peertalk.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4161385C2490FE6E00015663 = {
+			isa = PBXGroup;
+			children = (
+				416138672490FE6E00015663 /* Peertalk-iOS */,
+				416138662490FE6E00015663 /* Products */,
+				416138CC2490FFB200015663 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		416138662490FE6E00015663 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				416138652490FE6E00015663 /* Peertalk-iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		416138672490FE6E00015663 /* Peertalk-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				416138682490FE6E00015663 /* AppDelegate.h */,
+				416138692490FE6E00015663 /* AppDelegate.m */,
+				4161386E2490FE6E00015663 /* ViewController.h */,
+				4161386F2490FE6E00015663 /* ViewController.m */,
+				416138712490FE6E00015663 /* Main.storyboard */,
+				416138742490FE6F00015663 /* Assets.xcassets */,
+				416138762490FE6F00015663 /* LaunchScreen.storyboard */,
+				416138792490FE6F00015663 /* Info.plist */,
+				4161387A2490FE6F00015663 /* main.m */,
+			);
+			path = "Peertalk-iOS";
+			sourceTree = "<group>";
+		};
+		416138CC2490FFB200015663 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				416138F52491025900015663 /* Peertalk.framework */,
+				416138CD2490FFB200015663 /* PeertalkShare.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		416138642490FE6E00015663 /* Peertalk-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4161387E2490FE6F00015663 /* Build configuration list for PBXNativeTarget "Peertalk-iOS" */;
+			buildPhases = (
+				416138612490FE6E00015663 /* Sources */,
+				416138622490FE6E00015663 /* Frameworks */,
+				416138632490FE6E00015663 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Peertalk-iOS";
+			productName = "Peertalk-iOS";
+			productReference = 416138652490FE6E00015663 /* Peertalk-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4161385D2490FE6E00015663 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = mademao;
+				TargetAttributes = {
+					416138642490FE6E00015663 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+				};
+			};
+			buildConfigurationList = 416138602490FE6E00015663 /* Build configuration list for PBXProject "Peertalk-iOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4161385C2490FE6E00015663;
+			productRefGroup = 416138662490FE6E00015663 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				416138642490FE6E00015663 /* Peertalk-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		416138632490FE6E00015663 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416138782490FE6F00015663 /* LaunchScreen.storyboard in Resources */,
+				416138752490FE6F00015663 /* Assets.xcassets in Resources */,
+				416138732490FE6E00015663 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		416138612490FE6E00015663 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416138702490FE6E00015663 /* ViewController.m in Sources */,
+				4161386A2490FE6E00015663 /* AppDelegate.m in Sources */,
+				4161387B2490FE6F00015663 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		416138712490FE6E00015663 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				416138722490FE6E00015663 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		416138762490FE6F00015663 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				416138772490FE6F00015663 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4161387C2490FE6F00015663 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4161387D2490FE6F00015663 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4161387F2490FE6F00015663 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8BF66UA5FJ;
+				INFOPLIST_FILE = "Peertalk-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mademao.Peertalk-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		416138802490FE6F00015663 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8BF66UA5FJ;
+				INFOPLIST_FILE = "Peertalk-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mademao.Peertalk-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		416138602490FE6E00015663 /* Build configuration list for PBXProject "Peertalk-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4161387C2490FE6F00015663 /* Debug */,
+				4161387D2490FE6F00015663 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4161387E2490FE6F00015663 /* Build configuration list for PBXNativeTarget "Peertalk-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4161387F2490FE6F00015663 /* Debug */,
+				416138802490FE6F00015663 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4161385D2490FE6E00015663 /* Project object */;
+}
