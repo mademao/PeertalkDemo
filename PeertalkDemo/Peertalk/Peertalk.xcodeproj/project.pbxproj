@@ -15,6 +15,10 @@
 		416138F22491023800015663 /* PTUSBHub.m in Sources */ = {isa = PBXBuildFile; fileRef = 416138EB2491023800015663 /* PTUSBHub.m */; };
 		416138F32491023800015663 /* PTChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 416138EC2491023800015663 /* PTChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		416138F42491023800015663 /* PTChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 416138ED2491023800015663 /* PTChannel.m */; };
+		416138FE249107A000015663 /* PeertalkDef.h in Headers */ = {isa = PBXBuildFile; fileRef = 416138FC249107A000015663 /* PeertalkDef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		41CF4E15249109AC00FD1138 /* PeertalkDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CF4E14249109AC00FD1138 /* PeertalkDef.m */; };
+		41CF4E1B2491CCEB00FD1138 /* PeertalkProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CF4E192491CCEB00FD1138 /* PeertalkProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		41CF4E1C2491CCEB00FD1138 /* PeertalkProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CF4E1A2491CCEB00FD1138 /* PeertalkProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		416138EB2491023800015663 /* PTUSBHub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTUSBHub.m; sourceTree = "<group>"; };
 		416138EC2491023800015663 /* PTChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTChannel.h; sourceTree = "<group>"; };
 		416138ED2491023800015663 /* PTChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTChannel.m; sourceTree = "<group>"; };
+		416138FC249107A000015663 /* PeertalkDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeertalkDef.h; sourceTree = "<group>"; };
+		41CF4E14249109AC00FD1138 /* PeertalkDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeertalkDef.m; sourceTree = "<group>"; };
+		41CF4E192491CCEB00FD1138 /* PeertalkProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeertalkProxy.h; sourceTree = "<group>"; };
+		41CF4E1A2491CCEB00FD1138 /* PeertalkProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeertalkProxy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +69,16 @@
 			isa = PBXGroup;
 			children = (
 				416138DF249101F300015663 /* Peertalk.h */,
+				416138FB249106FF00015663 /* Common */,
+				416138FA249106BA00015663 /* Core */,
+				416138E0249101F300015663 /* Info.plist */,
+			);
+			path = Peertalk;
+			sourceTree = "<group>";
+		};
+		416138FA249106BA00015663 /* Core */ = {
+			isa = PBXGroup;
+			children = (
 				416138EC2491023800015663 /* PTChannel.h */,
 				416138ED2491023800015663 /* PTChannel.m */,
 				416138E72491023800015663 /* PTPrivate.h */,
@@ -68,9 +86,19 @@
 				416138EA2491023800015663 /* PTProtocol.m */,
 				416138E82491023800015663 /* PTUSBHub.h */,
 				416138EB2491023800015663 /* PTUSBHub.m */,
-				416138E0249101F300015663 /* Info.plist */,
 			);
-			path = Peertalk;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		416138FB249106FF00015663 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				416138FC249107A000015663 /* PeertalkDef.h */,
+				41CF4E14249109AC00FD1138 /* PeertalkDef.m */,
+				41CF4E192491CCEB00FD1138 /* PeertalkProxy.h */,
+				41CF4E1A2491CCEB00FD1138 /* PeertalkProxy.m */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,6 +112,8 @@
 				416138EF2491023800015663 /* PTUSBHub.h in Headers */,
 				416138F32491023800015663 /* PTChannel.h in Headers */,
 				416138E1249101F300015663 /* Peertalk.h in Headers */,
+				41CF4E1B2491CCEB00FD1138 /* PeertalkProxy.h in Headers */,
+				416138FE249107A000015663 /* PeertalkDef.h in Headers */,
 				416138EE2491023800015663 /* PTPrivate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,7 +188,9 @@
 			files = (
 				416138F22491023800015663 /* PTUSBHub.m in Sources */,
 				416138F42491023800015663 /* PTChannel.m in Sources */,
+				41CF4E1C2491CCEB00FD1138 /* PeertalkProxy.m in Sources */,
 				416138F12491023800015663 /* PTProtocol.m in Sources */,
+				41CF4E15249109AC00FD1138 /* PeertalkDef.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
