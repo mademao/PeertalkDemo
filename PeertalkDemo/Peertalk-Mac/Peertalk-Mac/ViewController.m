@@ -9,10 +9,6 @@
 #import "ViewController.h"
 #import <Peertalk/Peertalk.h>
 
-typedef NS_ENUM(NSUInteger, TextViewStringType) {
-    TextViewStringTypeSys
-};
-
 @interface ViewController () <PTChannelDelegate>
 
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
@@ -46,18 +42,19 @@ typedef NS_ENUM(NSUInteger, TextViewStringType) {
 
 #pragma mark - private methods
 
-- (void)appendOutputString:(NSString *)string stringType:(TextViewStringType)stringType
+- (void)appendSysOutputString:(NSString *)string
 {
-    NSString *preString = nil;
-    switch (stringType) {
-        case TextViewStringTypeSys:
-            preString = @"[SYS] > ";
-            break;
-        default:
-            preString = @"> ";
-            break;
-    }
-    self.textView.string = [NSString stringWithFormat:@"%@%@%@\n", self.textView.string, preString, string];
+    [self appendOutputString:[NSString stringWithFormat:@"[SYS] > %@", string]];
+}
+
+- (void)appendClientOutputString:(NSString *)string address:(NSString *)address
+{
+    [self appendOutputString:[NSString stringWithFormat:@"[%@] > %@", address, string]];
+}
+
+- (void)appendOutputString:(NSString *)string
+{
+    self.textView.string = [NSString stringWithFormat:@"%@\n%@", self.textView.string, string];
 }
 
 - (void)startServerChannel
@@ -66,9 +63,9 @@ typedef NS_ENUM(NSUInteger, TextViewStringType) {
     PTChannel *channel = [PTChannel channelWithDelegate:proxy];
     [channel listenOnPort:PTServerIPv4PortNumber IPv4Address:INADDR_LOOPBACK callback:^(NSError *error) {
         if (error) {
-            [self appendOutputString:[NSString stringWithFormat:@"Fail start server channel : %@", error] stringType:TextViewStringTypeSys];
+            [self appendSysOutputString:[NSString stringWithFormat:@"Fail start server channel : %@", error]];
         } else {
-           [self appendOutputString:@"Success start server channel" stringType:TextViewStringTypeSys];
+           [self appendSysOutputString:@"Success start server channel"];
         }
     }];
 }
@@ -99,27 +96,33 @@ typedef NS_ENUM(NSUInteger, TextViewStringType) {
 {
     if (type == PTMessageTypeText) {
         NSString *textString = PTMessageText_textWithPayload(payload);
-//        [self appendOutputString:[NSString stringWithFormat:@"[]] stringType:<#(TextViewStringType)#>]
+        [self appendClientOutputString:textString address:channel.userInfo];
     }
 }
 
-//- (void)ioFrameChannel:(PTChannel*)channel didReceiveFrameOfType:(uint32_t)type tag:(uint32_t)tag payload:(PTData*)payload
-//{
-//
-//}
-//
-//@optional
-//// Invoked to accept an incoming frame on a channel. Reply NO ignore the
-//// incoming frame. If not implemented by the delegate, all frames are accepted.
-//
-//
-//// Invoked when the channel closed. If it closed because of an error, *error* is
-//// a non-nil NSError object.
-//- (void)ioFrameChannel:(PTChannel*)channel didEndWithError:(NSError*)error;
-//
-//// For listening channels, this method is invoked when a new connection has been
-//// accepted.
-//- (void)ioFrameChannel:(PTChannel*)channel didAcceptConnection:(PTChannel*)otherChannel fromAddress:(PTAddress*)address;
+- (void)ioFrameChannel:(PTChannel *)channel didEndWithError:(NSError *)error
+{
+    if (error) {
+        [self appendSysOutputString:[NSString stringWithFormat:@"%@ disconnect with error: %@", channel.userInfo, error]];
+    } else {
+        [self appendSysOutputString:[NSString stringWithFormat:@"%@ disconnect", channel.userInfo]];
+    }
+    
+    if ([self.clientChannelArray containsObject:channel]) {
+        [self.clientChannelArray removeObject:channel];
+    }
+}
+
+- (void)ioFrameChannel:(PTChannel *)channel didAcceptConnection:(PTChannel *)otherChannel fromAddress:(PTAddress *)address
+{
+    if ([self.clientChannelArray containsObject:otherChannel] == NO) {
+        [self.clientChannelArray addObject:otherChannel];
+    }
+    
+    otherChannel.userInfo = address;
+    
+    [self appendSysOutputString:[NSString stringWithFormat:@"accept connection from %@", address]];
+}
 
 
 #pragma mark - lazy load
