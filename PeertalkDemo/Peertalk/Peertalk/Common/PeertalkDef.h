@@ -18,11 +18,21 @@ static const int PTServerIPv4PortNumber = 2345;
 
 typedef NS_ENUM(NSUInteger, PTMessageType) {
     PTMessageTypeMinValue = 100,
-    PTMessageTypePing = 100,
-    PTMessageTypePong = 101,
-    PTMessageTypeText = 102,
-    PTMessageTypeMaxValue = 102
+    PTMessageTypeChangePort = 100,
+    PTMessageTypeText = 101,
+    PTMessageTypeMaxValue = 101
 };
+
+
+#pragma mark - PTMessageTypeChangePort
+
+typedef struct _PTMessageChangePort {
+    int port;
+} PTMessageChangePort;
+
+extern dispatch_data_t PTMessageChangePort_dispatchDataWithPort(int port);
+
+extern int PTMessageChangePort_portWithPayload(PTData *payload);
 
 
 #pragma mark - PTMessageTypeText

@@ -8,6 +8,26 @@
 
 #import "PeertalkDef.h"
 
+#pragma mark - PTMessageTypeChangePort
+
+dispatch_data_t PTMessageChangePort_dispatchDataWithPort(int port) {
+    PTMessageChangePort *messageChangePort = CFAllocatorAllocate(nil, sizeof(PTMessageChangePort), 0);
+    messageChangePort->port = htonl(port);
+    
+    return dispatch_data_create((const void *)messageChangePort, sizeof(PTMessageChangePort), nil, ^{
+        CFAllocatorDeallocate(nil, messageChangePort);
+    });
+}
+
+int PTMessageChangePort_portWithPayload(PTData *payload) {
+    PTMessageChangePort *messageChangePort = (PTMessageChangePort *)payload.data;
+    messageChangePort->port = ntohl(messageChangePort->port);
+    return messageChangePort->port;
+}
+
+
+#pragma mark - PTMessageTypeText
+
 dispatch_data_t PTMessageText_dispatchDataWithText(NSString *text) {
     const char *utf8text = [text cStringUsingEncoding:NSUTF8StringEncoding];
     size_t length = strlen(utf8text);
