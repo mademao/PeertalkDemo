@@ -709,7 +709,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sb-gF-VdO">
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sb-gF-VdO">
                                 <rect key="frame" x="0.0" y="30" width="480" height="240"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4g4-2v-nSc">
                                     <rect key="frame" x="0.0" y="0.0" width="480" height="240"/>

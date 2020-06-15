@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSDictionary *userInfo;
 @property (nonatomic, assign) int transferPort;
 @property (nonatomic, strong) PTChannel *channel;
+@property (nonatomic, copy) NSString *dirName;
 
 @end
 
@@ -61,6 +62,8 @@
 
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
 
+@property (nonatomic, copy) NSString *basePath;
+
 @property (nonatomic, strong) NSMutableArray<ConnectedDeviceItem *> *connectedDeviceArray;
 
 @property (nonatomic, strong) dispatch_queue_t connectUSBPortQueue;
@@ -75,6 +78,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.basePath = @"/Users/mademao/Desktop/Transfer";
     
     self.currentPort = PTServerIPv4PortNumber + 1;
     
@@ -185,6 +190,13 @@
 
 #pragma mark - private methods
 
+- (void)createDirWithSubPath:(NSString *)subPath
+{
+    NSString *path = [self.basePath stringByAppendingPathComponent:subPath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL success = [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+}
+
 - (void)appendSysOutputString:(NSString *)string
 {
     [self appendOutputString:[NSString stringWithFormat:@"[SYS] > %@", string]];
@@ -197,7 +209,13 @@
 
 - (void)appendOutputString:(NSString *)string
 {
-    self.textView.string = [NSString stringWithFormat:@"%@\n%@", self.textView.string, string];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.textView.string = [NSString stringWithFormat:@"%@\n%@", self.textView.string, string];
+        BOOL scroll = NSMaxY(self.textView.visibleRect) == NSMaxY(self.textView.bounds);
+        if (scroll) {
+            [self.textView scrollRangeToVisible:NSMakeRange(self.textView.string.length, 0)];
+        }
+    });
 }
 
 - (void)registerNotification
@@ -205,12 +223,13 @@
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     [notificationCenter addObserverForName:PTUSBDeviceDidAttachNotification object:[PTUSBHub sharedHub] queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        [self appendSysOutputString:[NSString stringWithFormat:@"监测到ID：%@的机器通过USB与电脑连接", note.userInfo[@"DeviceID"]]];
         [self addConnectedDeviceItemWithDict:note.userInfo];
     }];
     
     [notificationCenter addObserverForName:PTUSBDeviceDidDetachNotification object:[PTUSBHub sharedHub] queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         [self removeConnectedDeviceItemWithDict:note.userInfo];
-        [self appendSysOutputString:[NSString stringWithFormat:@"D%@ 与电脑USB连接断开", [note.userInfo objectForKey:@"DeviceID"]]];
+        [self appendSysOutputString:[NSString stringWithFormat:@"监测到ID：%@的机器与电脑USB连接断开", [note.userInfo objectForKey:@"DeviceID"]]];
     }];
 }
 
@@ -241,9 +260,11 @@
     PTChannel *channel = [PTChannel channelWithDelegate:proxy];
     channel.userInfo = deviceItem.deviceID;
     
-    int port = deviceItem.transferPort == 0 ? PTServerIPv4PortNumber : deviceItem.transferPort;
+    BOOL shouldConnentDefault = deviceItem.transferPort == 0;
+    int port = shouldConnentDefault ? PTServerIPv4PortNumber : deviceItem.transferPort;
     [channel connectToPort:port overUSBHub:[PTUSBHub sharedHub] deviceID:deviceItem.deviceID callback:^(NSError *error) {
         if (error == nil) {
+            [self appendSysOutputString:[NSString stringWithFormat:@"电脑连接ID：%@的机器至机器的%@端口", deviceItem.deviceID, shouldConnentDefault ? @"默认" : @(deviceItem.transferPort)]];
             [self setChannel:channel forDeviceItem:deviceItem shouldCurrentDeviceItem:port == PTServerIPv4PortNumber];
         } else {
             [self resetPortForDeviceItem:deviceItem];
@@ -253,6 +274,7 @@
 
 - (void)sendChangePortMessageToUSBDevice:(ConnectedDeviceItem *)deviceItem
 {
+    [self appendSysOutputString:[NSString stringWithFormat:@"电脑给ID：%@的机器发送切换至机器%@端口的消息", deviceItem.deviceID, @(deviceItem.transferPort)]];
     dispatch_data_t payload = PTMessageChangePort_dispatchDataWithPort(deviceItem.transferPort);
     [deviceItem.channel sendFrameOfType:PTMessageTypeChangePort tag:PTFrameNoTag withPayload:payload callback:nil];
 }
@@ -262,7 +284,11 @@
 
 - (BOOL)ioFrameChannel:(PTChannel *)channel shouldAcceptFrameOfType:(uint32_t)type tag:(uint32_t)tag payloadSize:(uint32_t)payloadSize
 {
-    return YES;
+    if (type < PTMessageTypeMinValue || type > PTMessageTypeMaxValue) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void)ioFrameChannel:(PTChannel *)channel didReceiveFrameOfType:(uint32_t)type tag:(uint32_t)tag payload:(PTData *)payload
@@ -270,12 +296,33 @@
     if (type == PTMessageTypeText) {
         NSString *messageText = PTMessageText_textWithPayload(payload);
         [self appendClientOutputString:messageText address:channel.userInfo];
+    } else if (type == PTMessageTypeSetDirName) {
+        NSString *dirName = PTMessagesetDirName_nameWithPayload(payload);
+        NSNumber *deviceID = channel.userInfo;
+        [self setDirName:dirName forDeviceID:deviceID];
     }
 }
 
 - (void)ioFrameChannel:(PTChannel *)channel didEndWithError:(NSError *)error
 {
     [self disconnectChannelForDeviceID:channel.userInfo];
+}
+
+
+#pragma mark - transfer methods
+
+- (void)setDirName:(NSString *)dirName forDeviceID:(NSNumber *)deviceID
+{
+    dispatch_async(self.connectUSBPortQueue, ^{
+        for (int i = 0; i < self.connectedDeviceArray.count; i++) {
+            ConnectedDeviceItem *item = [self.connectedDeviceArray objectAtIndex:i];
+            if ([item.deviceID integerValue] == [deviceID integerValue]) {
+                item.dirName = dirName;
+                [self createDirWithSubPath:dirName];
+                break;
+            }
+        }
+    });
 }
 
 

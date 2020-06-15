@@ -37,19 +37,23 @@
 
 - (void)transferButtonAction
 {
-    self.transferButton.enabled = NO;
     [self startServerChannelWithPort:PTServerIPv4PortNumber];
 }
 
-- (void)sendTransferBeginMessageIfNeeded
+
+#pragma mark - private methods
+
+- (void)sendSetRootDirMessageIfNeed
 {
     if (self.currentPort == PTServerIPv4PortNumber) {
         return;
     }
-    dispatch_data_t payload = PTMessageText_dispatchDataWithText(@"开始了啊");
-    [self.clientChannel sendFrameOfType:PTMessageTypeText tag:PTFrameNoTag withPayload:payload callback:^(NSError *error) {
+    
+    NSString *bundleName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+    dispatch_data_t payload = PTMessageSetDirName_dispatchDataWithName(bundleName);
+    [self.clientChannel sendFrameOfType:PTMessageTypeSetDirName tag:PTFrameNoTag withPayload:payload callback:^(NSError *error) {
         if (error) {
-            [self sendTransferBeginMessageIfNeeded];
+            [self sendSetRootDirMessageIfNeed];
         } else {
             self.view.backgroundColor = [UIColor redColor];
         }
@@ -60,6 +64,7 @@
 
 - (void)startServerChannelWithPort:(in_port_t)port
 {
+    self.transferButton.enabled = NO;
     PeertalkProxy *proxy = [[PeertalkProxy alloc] initWithTarget:self];
     PTChannel *channel = [PTChannel channelWithDelegate:proxy];
     [channel listenOnPort:port IPv4Address:INADDR_LOOPBACK callback:^(NSError *error) {
@@ -100,6 +105,10 @@
     if (self.clientChannel) {
         [self.clientChannel close];
         self.clientChannel = nil;
+        if (self.currentPort != PTServerIPv4PortNumber) {
+            self.view.backgroundColor = [UIColor whiteColor];
+            self.transferButton.enabled = YES;
+        }
     }
 }
 
@@ -141,7 +150,7 @@
     self.clientChannel = otherChannel;
     self.clientChannel.userInfo = address;
     
-    [self sendTransferBeginMessageIfNeeded];
+    [self sendSetRootDirMessageIfNeed];
 }
 
 @end

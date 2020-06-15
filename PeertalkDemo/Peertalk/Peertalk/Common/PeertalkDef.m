@@ -26,6 +26,27 @@ int PTMessageChangePort_portWithPayload(PTData *payload) {
 }
 
 
+#pragma mark - PTMessageTypeSetDirName
+
+dispatch_data_t PTMessageSetDirName_dispatchDataWithName(NSString *name) {
+    const char *utf8name = [name cStringUsingEncoding:NSUTF8StringEncoding];
+    size_t length = strlen(utf8name);
+    PTMessageSetDirName *messageSetDirName = CFAllocatorAllocate(nil, sizeof(PTMessageSetDirName) + length, 0);
+    memcpy(messageSetDirName->utf8_root_dir, utf8name, length);
+    messageSetDirName->length = htonl(length);
+    
+    return dispatch_data_create((const void *)messageSetDirName, sizeof(PTMessageSetDirName) + length, nil, ^{
+        CFAllocatorDeallocate(nil, messageSetDirName);
+    });
+}
+
+NSString *PTMessagesetDirName_nameWithPayload(PTData *payload) {
+    PTMessageSetDirName *messageSetDirName = (PTMessageSetDirName *)payload.data;
+    messageSetDirName->length = ntohl(messageSetDirName->length);
+    return [[NSString alloc] initWithBytes:messageSetDirName->utf8_root_dir length:messageSetDirName->length encoding:NSUTF8StringEncoding];
+}
+
+
 #pragma mark - PTMessageTypeText
 
 dispatch_data_t PTMessageText_dispatchDataWithText(NSString *text) {
