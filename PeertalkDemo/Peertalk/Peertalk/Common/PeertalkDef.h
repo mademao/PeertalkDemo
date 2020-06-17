@@ -19,9 +19,10 @@ static const int PTServerIPv4PortNumber = 2345;
 typedef NS_ENUM(NSUInteger, PTMessageType) {
     PTMessageTypeMinValue = 100,
     PTMessageTypeChangePort = 100,
-    PTMessageTypeSetDirName = 101,
-    PTMessageTypeText = 102,
-    PTMessageTypeMaxValue = 102
+    PTMessageTypeCreateDir = 101,
+    PTMessageTypeFile = 102,
+    PTMessageTypeText = 103,
+    PTMessageTypeMaxValue = 103
 };
 
 
@@ -36,16 +37,30 @@ extern dispatch_data_t PTMessageChangePort_dispatchDataWithPort(int port);
 extern int PTMessageChangePort_portWithPayload(PTData *payload);
 
 
-#pragma mark - PTMessageTypeSetDirName
+#pragma mark - PTMessageTypeCreateDir
 
-typedef struct _PTMessageSetDirName {
+typedef struct _PTMessageCreateDir {
     uint32_t length;
-    uint8_t utf8_root_dir[0];
-} PTMessageSetDirName;
+    uint8_t utf8_dir_name[0];
+} PTMessageCreateDir;
 
-extern dispatch_data_t PTMessageSetDirName_dispatchDataWithName(NSString *name);
+extern dispatch_data_t PTMessageCreateDir_dispatchDataWithDirName(NSString *dirname);
 
-extern NSString *PTMessagesetDirName_nameWithPayload(PTData *payload);
+extern NSString *PTMessageCreateDir_dirnameWithPayload(PTData *payload);
+
+
+#pragma mark - PTMessageTypeFile
+
+typedef struct _PTMessageFile {
+    uint32_t path_length;
+    uint32_t data_length;
+    uint8_t utf8_path[0];
+    uint8_t data[0];
+} PTMessageFile;
+
+extern dispatch_data_t PTMessageFile_dispatchDataWithData(NSData *data, NSString *path);
+
+extern NSData *PTMessageFile_dataWithPayload(PTData *payload, NSString **path);
 
 
 #pragma mark - PTMessageTypeText

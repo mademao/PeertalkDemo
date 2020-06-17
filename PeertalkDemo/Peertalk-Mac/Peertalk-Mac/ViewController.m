@@ -76,8 +76,29 @@
 
 @implementation ViewController
 
+
+- (void)findFile {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    [panel setCanChooseFiles:NO];//是否能选择文件file
+    [panel setCanChooseDirectories:YES];//是否能打开文件夹
+//    [panel setAllowsMultipleSelection:NO];//是否允许多选file
+    [panel setCanCreateDirectories:YES];
+    NSInteger finded = [panel runModal]; //获取panel的响应
+    if (finded == NSModalResponseOK) {
+        //  NSFileHandlingPanelCancelButton = NSModalResponseCancel；     NSFileHandlingPanelOKButton = NSModalResponseOK,
+        for (NSURL *url in [panel URLs]) {
+            NSLog(@"--->%@",url.path);
+            //这个url是文件的路径
+            //同时这里可以处理你要做的事情 do something
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    [self findFile];
+//    return;
     
     self.basePath = @"/Users/mademao/Desktop/Transfer";
     
@@ -131,6 +152,7 @@
                 if (item.channel) {
                     [item.channel close];
                     item.channel = nil;
+                    [self appendSysOutputString:[NSString stringWithFormat:@"监测到ID：%@的机器与软件连接断开", deviceID]];
                 }
                 break;
             }
@@ -190,11 +212,14 @@
 
 #pragma mark - private methods
 
-- (void)createDirWithSubPath:(NSString *)subPath
+- (void)createDirWithSubPath:(NSString *)subPath needRemove:(BOOL)needRemove
 {
     NSString *path = [self.basePath stringByAppendingPathComponent:subPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL success = [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    if (needRemove && [fileManager fileExistsAtPath:path]) {
+        [fileManager removeItemAtPath:path error:nil];
+    }
+    [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 }
 
 - (void)appendSysOutputString:(NSString *)string
@@ -296,10 +321,13 @@
     if (type == PTMessageTypeText) {
         NSString *messageText = PTMessageText_textWithPayload(payload);
         [self appendClientOutputString:messageText address:channel.userInfo];
-    } else if (type == PTMessageTypeSetDirName) {
-        NSString *dirName = PTMessagesetDirName_nameWithPayload(payload);
+    } else if (type == PTMessageTypeCreateDir) {
+        NSString *dirName = PTMessageCreateDir_dirnameWithPayload(payload);
         NSNumber *deviceID = channel.userInfo;
         [self setDirName:dirName forDeviceID:deviceID];
+    } else if (type == PTMessageTypeFile) {
+        NSNumber *deviceID = channel.userInfo;
+        [self fetchFile:payload forDeviceID:deviceID];
     }
 }
 
@@ -317,9 +345,26 @@
         for (int i = 0; i < self.connectedDeviceArray.count; i++) {
             ConnectedDeviceItem *item = [self.connectedDeviceArray objectAtIndex:i];
             if ([item.deviceID integerValue] == [deviceID integerValue]) {
-                item.dirName = dirName;
-                [self createDirWithSubPath:dirName];
+                item.dirName = [self.basePath stringByAppendingPathComponent:dirName];
+                [self createDirWithSubPath:dirName needRemove:YES];
                 break;
+            }
+        }
+    });
+}
+
+- (void)fetchFile:(PTData *)payload forDeviceID:(NSNumber *)deviceID
+{
+    dispatch_async(self.connectUSBPortQueue, ^{
+        for (int i = 0; i < self.connectedDeviceArray.count; i++) {
+            ConnectedDeviceItem *item = [self.connectedDeviceArray objectAtIndex:i];
+            if ([item.deviceID integerValue] == [deviceID integerValue]) {
+                NSString *filePath = nil;
+                NSData *fileData = PTMessageFile_dataWithPayload(payload, &filePath);
+                NSString *fullFilePath = [item.dirName stringByAppendingPathComponent:filePath];
+                NSString *dirPath = [fullFilePath stringByDeletingLastPathComponent];
+                [self createDirWithSubPath:dirPath needRemove:NO];
+                [fileData writeToFile:fullFilePath atomically:YES];
             }
         }
     });
