@@ -76,7 +76,7 @@
 
 @implementation ViewController
 
-
+/*
 - (void)findFile {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     [panel setCanChooseFiles:NO];//是否能选择文件file
@@ -93,6 +93,7 @@
         }
     }
 }
+ */
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -212,9 +213,8 @@
 
 #pragma mark - private methods
 
-- (void)createDirWithSubPath:(NSString *)subPath needRemove:(BOOL)needRemove
+- (void)createDirWithPath:(NSString *)path needRemove:(BOOL)needRemove
 {
-    NSString *path = [self.basePath stringByAppendingPathComponent:subPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (needRemove && [fileManager fileExistsAtPath:path]) {
         [fileManager removeItemAtPath:path error:nil];
@@ -346,7 +346,7 @@
             ConnectedDeviceItem *item = [self.connectedDeviceArray objectAtIndex:i];
             if ([item.deviceID integerValue] == [deviceID integerValue]) {
                 item.dirName = [self.basePath stringByAppendingPathComponent:dirName];
-                [self createDirWithSubPath:dirName needRemove:YES];
+                [self createDirWithPath:item.dirName needRemove:YES];
                 break;
             }
         }
@@ -363,7 +363,7 @@
                 NSData *fileData = PTMessageFile_dataWithPayload(payload, &filePath);
                 NSString *fullFilePath = [item.dirName stringByAppendingPathComponent:filePath];
                 NSString *dirPath = [fullFilePath stringByDeletingLastPathComponent];
-                [self createDirWithSubPath:dirPath needRemove:NO];
+                [self createDirWithPath:dirPath needRemove:NO];
                 [fileData writeToFile:fullFilePath atomically:YES];
             }
         }

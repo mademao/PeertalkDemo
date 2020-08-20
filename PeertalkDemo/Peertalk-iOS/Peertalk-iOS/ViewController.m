@@ -28,13 +28,13 @@
     if ([[userDefaults objectForKey:@"CreateFile"] boolValue] == NO) {
         NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
         NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSData *data1 = [NSData dataWithContentsOfFile:[bundlePath stringByAppendingString:@"/File/键盘调起SIGQUIT问题现状.key"]];
-        [data1 writeToFile:[documentPath stringByAppendingString:@"/键盘调起SIGQUIT问题现状.key"] atomically:YES];
+        NSData *data1 = [NSData dataWithContentsOfFile:[bundlePath stringByAppendingString:@"/File/GIF文件格式.pdf"]];
+        [data1 writeToFile:[documentPath stringByAppendingString:@"/GIF文件格式.pdf"] atomically:YES];
         
-        NSData *data2 = [NSData dataWithContentsOfFile:[bundlePath stringByAppendingString:@"/File/Subfile/键盘调起SIGQUIT问题现状.pptx"]];
+        NSData *data2 = [NSData dataWithContentsOfFile:[bundlePath stringByAppendingString:@"/File/Subfile/giflib解析解码.pdf"]];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         [fileManager createDirectoryAtPath:[documentPath stringByAppendingString:@"/Subfile"] withIntermediateDirectories:YES attributes:nil error:nil];
-        [data2 writeToFile:[documentPath stringByAppendingString:@"/Subfile/键盘调起SIGQUIT问题现状.pptx"] atomically:YES];
+        [data2 writeToFile:[documentPath stringByAppendingString:@"/Subfile/giflib解析解码.pdf"] atomically:YES];
         
         [userDefaults setBool:YES forKey:@"CreateFile"];
     }
